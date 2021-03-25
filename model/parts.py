@@ -34,3 +34,17 @@ class PartsDAO:
         pid = cursor.fetchone()[0]
         self.conn.commit()
         return pid
+
+    def updatePart(self, pid, pname, pcolor, pmaterial, pprice, pweight):
+        cursor = self.conn.cursor()
+        query= "update parts set pname=%s, pcolor = %s, pmaterial=%s, pprice =%s, pweight=%s where pid=%s;"
+        cursor.execute(query, (pname, pcolor, pmaterial, pprice, pweight,pid))
+        self.conn.commit()
+        return True
+
+    def deletePart(self, pid):
+        cursor = self.conn.cursor()
+        query = "delete from parts where pid=%s;"
+        cursor.execute(query,(pid,))
+        self.conn.commit()
+        return True

@@ -24,10 +24,14 @@ def handleParts():
     else:
         return BaseParts().getAllParts()
 
-@app.route('/PartApp/parts/<int:pid>', methods=['GET'])
+@app.route('/PartApp/parts/<int:pid>', methods=['GET', 'PUT', 'DELETE'])
 def handlePartById(pid):
     if request.method == 'GET':
         return BaseParts().getPartById(pid)
+    elif  request.method == 'PUT':
+        return BaseParts().updatePart(request.json)
+    elif request.method == 'DELETE':
+        return BaseParts().deletePart(pid)
     else:
         return jsonify("Method Not Allowed"), 405
 

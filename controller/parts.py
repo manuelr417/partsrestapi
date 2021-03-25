@@ -58,3 +58,23 @@ class BaseParts:
         pid = dao.insertPart(pname, pcolor, pmaterial, pprice, pweight)
         result = self.build_attr_dict(pid,pname, pcolor, pmaterial, pprice, pweight)
         return jsonify(result), 201
+
+    def updatePart(self, json):
+        pname = json['pname']
+        pcolor = json['pcolor']
+        pmaterial = json['pmaterial']
+        pprice = json['pprice']
+        pweight = json['pweight']
+        pid = json['pid']
+        dao = PartsDAO()
+        updated_code = dao.updatePart(pid, pname, pcolor, pmaterial, pprice, pweight)
+        result = self.build_attr_dict(pid,pname, pcolor, pmaterial, pprice, pweight)
+        return jsonify(result), 200
+
+    def deletePart(self, pid):
+        dao = PartsDAO()
+        result = dao.deletePart(pid)
+        if result:
+            return jsonify("DELETED"), 200
+        else:
+            return jsonify("NOT FOUND"), 404
