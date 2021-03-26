@@ -46,5 +46,9 @@ class PartsDAO:
         cursor = self.conn.cursor()
         query = "delete from parts where pid=%s;"
         cursor.execute(query,(pid,))
+        # determine affected rows
+        affected_rows = cursor.rowcount
         self.conn.commit()
-        return True
+        # if affected rows == 0, the part was not found and hence not deleted
+        # otherwise, it was deleted, so check if affected_rows != 0
+        return affected_rows !=0
